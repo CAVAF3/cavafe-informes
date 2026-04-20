@@ -6,7 +6,7 @@ const C = {
   green:"#2e7d32", greenHover:"#1b5e20", red:"#c62828"
 };
 const PASSWORD = "Sise9490";
-const EMPLEADOS = ["LIC. MANUEL TORIZ CHAVARRÍA","YADIRA LIRAI REYES RAMOS","VERÓNICA 1","VERÓNICA 2"];
+const EMPLEADOS = ["LIC. MANUEL TORIZ CHAVARRÍA","YADIRA LIRAI REYES RAMOS","VERÓNICA RENDON","VERÓNICA 2"];
 const ESTRUCTURA = {
   AXA: { Robo:["Robo por asalto","Robo Veh. Estacionado","Robo en Plataforma"], Colisión:["Colisión Particular","Colisión Plataforma"] },
   QUALITAS: { 
