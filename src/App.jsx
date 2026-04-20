@@ -458,12 +458,12 @@ export default function App() {
           {empresa&&<Card><SecTitle n="2" t="Categoría"/>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:10}}>
               {Object.keys(ESTRUCTURA[empresa]).map(cat=>
-                <RadioRow key={cat} label={cat} selected={tipo===cat} onClick={()=>{setTipo(cat);setCategoria("");}}/>
+                <RadioRow key={cat} label={cat} selected={tipo===cat} onClick={()=>{setTipo(cat);if(cat==="Recuperación de Certificados")setCategoria("Verificación CFDI");else setCategoria("");}}/>
               )}
             </div>
           </Card>}
 
-          {tipo&&<Card><SecTitle n="3" t="Subtipo"/>
+          {tipo&&tipo!=="Recuperación de Certificados"&&<Card><SecTitle n="3" t="Subtipo"/>
             <div style={{display:"grid",gap:10}}>
               {ESTRUCTURA[empresa][tipo].map(sub=>
                 <RadioRow key={sub} label={sub} selected={categoria===sub} onClick={()=>setCategoria(sub)}/>
@@ -471,7 +471,7 @@ export default function App() {
             </div>
           </Card>}
 
-          {categoria&&<Card><SecTitle n="4" t="Revisor"/>
+          {((categoria&&tipo!=="Recuperación de Certificados")||(tipo==="Recuperación de Certificados"))&&<Card><SecTitle n={tipo==="Recuperación de Certificados"?"3":"4"} t="Revisor"/>
             <div style={{display:"grid",gap:10}}>
               {EMPLEADOS.map(emp=>
                 <RevisorRow key={emp} label={emp} selected={revisor===emp} onClick={()=>setRevisor(emp)}/>
@@ -479,7 +479,12 @@ export default function App() {
             </div>
           </Card>}
 
-          {revisor&&<Btn full onClick={()=>setStep(1)}>Continuar →</Btn>}
+          {tipo==="Recuperación de Certificados"&&revisor&&<Card><SecTitle n="4" t="No. Siniestro"/>
+            <FInput label="Número de Siniestro" value={info.no_siniestro} onChange={e=>setInfo({...info,no_siniestro:e.target.value})} placeholder="Ej: 04260263555"/>
+          </Card>}
+
+          {tipo!=="Recuperación de Certificados"&&revisor&&<Btn full onClick={()=>setStep(1)}>Continuar →</Btn>}
+          {tipo==="Recuperación de Certificados"&&revisor&&info.no_siniestro&&<Btn full onClick={()=>setStep(2)}>Continuar →</Btn>}
         </>}
 
         {step===1&&<>
