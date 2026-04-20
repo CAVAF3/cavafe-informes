@@ -251,14 +251,14 @@ export default function App() {
     }
   }, []);
 
- // ── FUNCIÓN PRINCIPAL: Análisis con IA y generación de Word ──
+  // ── FUNCIÓN PRINCIPAL: Análisis con IA y generación de Word ──
   const doAnalysis = async () => {
     setStep(3);
     setProgress(10);
     setTask("Analizando documentos con IA...");
 
     try {
-      // ⬇️ NUEVO: Detectar si es Recuperación de Certificados
+      // Detectar si es Recuperación de Certificados
       const esRecuperacionCertificados = tipo === "Recuperación de Certificados";
 
       // 1. Llamar a la API correspondiente
@@ -324,28 +324,6 @@ export default function App() {
 
       setProgress(90);
       setTask("Descargando documento...");
-
-      // 4. Descargar el archivo
-      const blob = await wordResponse.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `Informe_${empresa}_${tipo}_${info.no_siniestro || 'SN'}.docx`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-
-      setProgress(100);
-      await new Promise(r => setTimeout(r, 500));
-      setStep(4);
-
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error: ' + error.message);
-      setStep(2);
-    }
-  };
 
       // 4. Descargar el archivo
       const blob = await wordResponse.blob();
