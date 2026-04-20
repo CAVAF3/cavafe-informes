@@ -9,7 +9,13 @@ const PASSWORD = "Sise9490";
 const EMPLEADOS = ["LIC. MANUEL TORIZ CHAVARRÍA","YADIRA LIRAI REYES RAMOS","VERÓNICA 1","VERÓNICA 2"];
 const ESTRUCTURA = {
   AXA: { Robo:["Robo por asalto","Robo Veh. Estacionado","Robo en Plataforma"], Colisión:["Colisión Particular","Colisión Plataforma"] },
-  QUALITAS: { Robo:["Robo Particular","Robo Equipo Pesado","Robo Fronterizo","Robo Plataforma"], Colisión:["Colisión Particular"], Facturas:["Con contestación de emisor por correo","Con contestación de emisor por llamada","Con elementos de documento impreso"], Licencia:["Con contestación de emisor"] }
+  QUALITAS: { 
+    Robo:["Robo Particular","Robo Equipo Pesado","Robo Fronterizo","Robo Plataforma"], 
+    Colisión:["Colisión Particular"], 
+    Facturas:["Con contestación de emisor por correo","Con contestación de emisor por llamada","Con elementos de documento impreso"], 
+    Licencia:["Con contestación de emisor"],
+    "Recuperación de Certificados":["Verificación CFDI"]
+  }
 };
 const DOCS_P = ["Póliza","Denuncia","Acreditación de Propiedad","Sitio (Lugar de hechos)","Entrevista NA","Entrevista Conductor","Entrevista Testigo","Tenencia","REPUVE","Fotomultas","Concurrencia","CSF","Factura","Verificación de Factura","TAR","INE","Preexistencia","Correo contestación"];
 const DOCS_PLAT = [...DOCS_P,"Perfil Plataforma","Historial Ganancias Plataforma","Perfil Vehículo Plataforma","Historial Viajes Plataforma"];
@@ -245,35 +251,41 @@ export default function App() {
     }
   }, []);
 
-  // ── FUNCIÓN PRINCIPAL: Análisis con IA y generación de Word ──
+ // ── FUNCIÓN PRINCIPAL: Análisis con IA y generación de Word ──
   const doAnalysis = async () => {
     setStep(3);
     setProgress(10);
     setTask("Analizando documentos con IA...");
 
     try {
-      // 1. Llamar a la API de Anthropic para analizar documentos
-      const analyzeResponse = await fetch('/api/analizar-documentos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          images: images.map(img => ({ data: img.data, type: img.type, category: img.category })),
-          datosCaso: {
-            empresa,
-            tipo: `${tipo} - ${categoria}`,
-            no_siniestro: info.no_siniestro,
-            nombre_asegurado: info.nombre_asegurado,
-            nombre_conductor: info.nombre_conductor,
-            marca: info.marca,
-            submarca: info.submarca,
-            modelo: info.modelo,
-            color: info.color,
-            no_serie: info.no_serie,
-            placas: info.placas,
-            uso: info.uso
-          }
-        })
-      });
+      // ⬇️ NUEVO: Detectar si es Recuperación de Certificados
+      const esRecuperacionCertificados = tipo === "Recuperación de Certificados";
+
+      // 1. Llamar a la API correspondiente
+      const analyzeResponse = await fetch(
+        esRecuperacionCertificados ? '/api/analizar-cfdi' : '/api/analizar-documentos',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            images: images.map(img => ({ data: img.data, type: img.type, category: img.category })),
+            datosCaso: {
+              empresa,
+              tipo: `${tipo} - ${categoria}`,
+              no_siniestro: info.no_siniestro,
+              nombre_asegurado: info.nombre_asegurado,
+              nombre_conductor: info.nombre_conductor,
+              marca: info.marca,
+              submarca: info.submarca,
+              modelo: info.modelo,
+              color: info.color,
+              no_serie: info.no_serie,
+              placas: info.placas,
+              uso: info.uso
+            }
+          })
+        }
+      );
 
       if (!analyzeResponse.ok) throw new Error('Error en análisis IA');
 
@@ -283,21 +295,24 @@ export default function App() {
       setProgress(50);
       setTask("Generando documento Word...");
 
-      // 2. Llamar a la API para generar el Word
-      const wordResponse = await fetch('/api/generar-word', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          datosCaso: {
-            empresa,
-            tipo: `${tipo} - ${categoria}`,
-            ...info,
-            revisor
-          },
-          analisisIA: analyzeData.analisis,
-          imagenes: images.map(img => ({ data: img.data, type: img.type }))
-        })
-      });
+      // 2. Llamar a la API de generación de Word correspondiente
+      const wordResponse = await fetch(
+        esRecuperacionCertificados ? '/api/generar-word-certificados' : '/api/generar-word',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            datosCaso: {
+              empresa,
+              tipo: `${tipo} - ${categoria}`,
+              ...info,
+              revisor
+            },
+            analisisIA: analyzeData.analisis,
+            imagenes: images.map(img => ({ data: img.data, type: img.type }))
+          })
+        }
+      );
 
       if (!wordResponse.ok) throw new Error('Error generando Word');
 
@@ -309,6 +324,28 @@ export default function App() {
 
       setProgress(90);
       setTask("Descargando documento...");
+
+      // 4. Descargar el archivo
+      const blob = await wordResponse.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Informe_${empresa}_${tipo}_${info.no_siniestro || 'SN'}.docx`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      setProgress(100);
+      await new Promise(r => setTimeout(r, 500));
+      setStep(4);
+
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error: ' + error.message);
+      setStep(2);
+    }
+  };
 
       // 4. Descargar el archivo
       const blob = await wordResponse.blob();
