@@ -166,7 +166,7 @@ export default function App() {
   };
 
   const docsReq = tipo === "Recuperación de Certificados" 
-    ? ["Factura CFDI"] 
+    ? ["Factura CFDI (parte 1)", "Factura CFDI (parte 2)", "Correo de contestación emisor", "Captura validación SAT", "Captura certificados SAT", "Captura validación RFC"] 
     : tipo.includes("Plataforma") 
       ? DOCS_PLAT 
       : DOCS_P;
