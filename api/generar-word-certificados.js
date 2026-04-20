@@ -171,13 +171,13 @@ export default async function handler(req, res) {
               children: [
                 new TextRun({
                   text: "CAVAFE          ",
-                  font: "Arial",
+                  font: "Times New Roman",
                   size: 32,
                   bold: true,
                 }),
                 new TextRun({
                   text: "INFORME DE INVESTIGACIÓN.",
-                  font: "Arial",
+                  font: "Times New Roman",
                   size: 28,
                 }),
               ],
@@ -187,26 +187,171 @@ export default async function handler(req, res) {
 
             // Referencia
             new Paragraph({
-              text: `REFERENCIA: SIN. ${datosCaso.no_siniestro || 'N/A'}`,
-              alignment: AlignmentType.RIGHT,
-              spacing: { after: 200 },
-              font: "Arial",
+              children: [
+                new TextRun({ 
+                  text: "ANTECEDENTES: ", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: "Qualitas compañía de seguros nos solicita realizar la verificación de autenticidad de un CFDI emitido el día ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.fecha_emision || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: " por la persona moral denominada ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.emisor_nombre || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: ", en favor de ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.receptor_nombre || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: "; en el texto del documento antes descrito, se pretende acreditar la realización de una operación de compra venta de la unidad automotriz de la Marca ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.marca || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: " modelo ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.modelo || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: ", serie ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.serie || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+              ],
+              alignment: AlignmentType.JUSTIFIED,
+              spacing: { after: 300 },
+            }),
               size: 22,
             }),
 
             // Antecedentes
             new Paragraph({
               children: [
-                new TextRun({ text: "ANTECEDENTES:", bold: true, font: "Arial", size: 22 }),
+                new TextRun({ 
+                  text: "ANTECEDENTES: ", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: "Qualitas compañía de seguros nos solicita realizar la verificación de autenticidad de un CFDI emitido el día ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.fecha_emision || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: " por la persona moral denominada ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.emisor_nombre || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: ", en favor de ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.receptor_nombre || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: "; en el texto del documento antes descrito, se pretende acreditar la realización de una operación de compra venta de la unidad automotriz de la Marca ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.marca || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: " modelo ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.modelo || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: ", serie ", 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
+                new TextRun({ 
+                  text: analisisIA.serie || "N/A", 
+                  bold: true, 
+                  font: "Times New Roman", 
+                  size: 22 
+                }),
               ],
-              spacing: { after: 200 },
+              alignment: AlignmentType.JUSTIFIED,
+              spacing: { after: 300 },
             }),
 
             new Paragraph({
               text: `Qualitas compañía de seguros nos solicita realizar la verificación de autenticidad de un CFDI emitido el día ${analisisIA.fecha_emision} por la persona moral denominada ${analisisIA.emisor_nombre}, en favor de ${analisisIA.receptor_nombre}; en el texto del documento antes descrito, se pretende acreditar la realización de una operación de compra venta de la unidad automotriz de la Marca ${analisisIA.marca} modelo ${analisisIA.modelo}, serie ${analisisIA.serie}`,
               alignment: AlignmentType.JUSTIFIED,
               spacing: { after: 300 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
 
@@ -223,7 +368,7 @@ export default async function handler(req, res) {
                 right: { style: BorderStyle.SINGLE, size: 6, color: "000000" },
               },
               spacing: { before: 200, after: 200 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 24,
             }),
 
@@ -252,8 +397,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Arial", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Arial", size: 28 }),
+                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
+                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
               ],
               alignment: AlignmentType.CENTER,
               spacing: { after: 400 },
@@ -283,15 +428,15 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Arial", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Arial", size: 28 }),
+                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
+                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
               ],
               alignment: AlignmentType.CENTER,
               spacing: { after: 400 },
             }),
 
             new Paragraph({
-              children: [new TextRun({ text: "HIPÓTESIS:", bold: true, font: "Arial", size: 22 })],
+              children: [new TextRun({ text: "HIPÓTESIS:", bold: true, font: "Times New Roman", size: 22 })],
               spacing: { after: 200 },
             }),
 
@@ -299,19 +444,19 @@ export default async function handler(req, res) {
               text: "La hipótesis proporciona a la investigación la idea directriz, que debe ser mantenida o rectificada una vez obtenidos los resultados de la misma; al respecto, lo primero que corresponde desarrollar es el planteamiento del problema, para después darle cause sistemático a la investigación y así obtener la confirmación o no del hecho puesto a consideración. En este caso en particular, la principal línea de investigación se encamino a determinar con objetividad, si el documento antes descrito fue legalmente expedido o se trata de documento apócrifo.",
               alignment: AlignmentType.JUSTIFIED,
               spacing: { after: 300 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
 
             new Paragraph({
-              children: [new TextRun({ text: "DESARROLLO DE LA INVESTIGACIÓN:", bold: true, font: "Arial", size: 22 })],
+              children: [new TextRun({ text: "DESARROLLO DE LA INVESTIGACIÓN:", bold: true, font: "Times New Roman", size: 22 })],
               spacing: { after: 200 },
             }),
 
             new Paragraph({
               children: [
-                new TextRun({ text: "1. ", bold: true, font: "Arial", size: 22 }),
-                new TextRun({ text: `En primera instancia, procedimos a realizar todas las gestiones a nuestro alcance para localizar y entrar en contacto directo con la persona moral a quien se le imputa la autoría del documento cuestionado; nos comunicamos con ${analisisIA.emisor_nombre}...`, font: "Arial", size: 22 }),
+                new TextRun({ text: "1. ", bold: true, font: "Times New Roman", size: 22 }),
+                new TextRun({ text: `En primera instancia, procedimos a realizar todas las gestiones a nuestro alcance para localizar y entrar en contacto directo con la persona moral a quien se le imputa la autoría del documento cuestionado; nos comunicamos con ${analisisIA.emisor_nombre}...`, font: "Times New Roman", size: 22 }),
               ],
               alignment: AlignmentType.JUSTIFIED,
               spacing: { after: 200 },
@@ -324,8 +469,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Arial", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Arial", size: 28 }),
+                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
+                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
               ],
               alignment: AlignmentType.CENTER,
               spacing: { after: 400 },
@@ -345,8 +490,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Arial", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Arial", size: 28 }),
+                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
+                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
               ],
               alignment: AlignmentType.CENTER,
               spacing: { after: 400 },
@@ -366,8 +511,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Arial", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Arial", size: 28 }),
+                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
+                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
               ],
               alignment: AlignmentType.CENTER,
               spacing: { after: 400 },
@@ -387,8 +532,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Arial", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Arial", size: 28 }),
+                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
+                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
               ],
               alignment: AlignmentType.CENTER,
               spacing: { after: 400 },
@@ -409,8 +554,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Arial", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Arial", size: 28 }),
+                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
+                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
               ],
               alignment: AlignmentType.CENTER,
               spacing: { after: 400 },
@@ -428,7 +573,7 @@ export default async function handler(req, res) {
                 right: { style: BorderStyle.SINGLE, size: 6, color: "000000" },
               },
               spacing: { before: 200, after: 200 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 24,
             }),
 
@@ -436,7 +581,7 @@ export default async function handler(req, res) {
               text: "En este apartado, realizamos un análisis de los datos que aparecen en la versión impresa del CFDI, para verificar si existen anomalías que nos hagan suponer que el siguiente documento fue alterado o modificado.",
               alignment: AlignmentType.JUSTIFIED,
               spacing: { after: 300 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
 
@@ -444,14 +589,14 @@ export default async function handler(req, res) {
               text: "Fecha y hora de emisión en el encabezado:",
               bold: true,
               spacing: { after: 100 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
             new Paragraph({
               text: `Resultado: ${analisisIA.verificaciones.fecha || 'N/A'}`,
               bold: true,
               spacing: { after: 200 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
 
@@ -459,20 +604,20 @@ export default async function handler(req, res) {
               text: "Folio fiscal del encabezado:",
               bold: true,
               spacing: { after: 100 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
             new Paragraph({
               text: analisisIA.folio_fiscal || 'N/A',
               spacing: { after: 100 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
             new Paragraph({
               text: `Resultado: ${analisisIA.verificaciones.folio || 'N/A'}`,
               bold: true,
               spacing: { after: 200 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
 
@@ -480,7 +625,7 @@ export default async function handler(req, res) {
               text: `Sello digital: ${analisisIA.verificaciones.sello || 'N/A'}`,
               bold: true,
               spacing: { after: 200 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
 
@@ -488,7 +633,7 @@ export default async function handler(req, res) {
               text: `Número de certificado: ${analisisIA.verificaciones.certificado || 'N/A'}`,
               bold: true,
               spacing: { after: 200 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
           ],
@@ -499,8 +644,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Arial", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Arial", size: 28 }),
+                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
+                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
               ],
               alignment: AlignmentType.CENTER,
               spacing: { after: 400 },
@@ -518,18 +663,18 @@ export default async function handler(req, res) {
                 right: { style: BorderStyle.SINGLE, size: 6, color: "000000" },
               },
               spacing: { before: 400, after: 400 },
-              font: "Arial",
+              font: "Times New Roman",
               size: 26,
             }),
 
             new Paragraph({
               children: [
-                new TextRun({ text: "ÚNICA: ", bold: true, font: "Arial", size: 22 }),
+                new TextRun({ text: "ÚNICA: ", bold: true, font: "Times New Roman", size: 22 }),
                 new TextRun({
                   text: analisisIA.conclusion === "autentico"
                     ? "De acuerdo a la investigación realizada en este siniestro, NO encontramos elementos que desvirtúen la autenticidad del documento sometido a revisión."
                     : `De acuerdo a la investigación realizada en este siniestro, SÍ encontramos elementos que desvirtúen la autenticidad del documento sometido a revisión, específicamente: ${(analisisIA.inconsistencias || []).join(", ")}.`,
-                  font: "Arial",
+                  font: "Times New Roman",
                   size: 22,
                 }),
               ],
@@ -542,13 +687,13 @@ export default async function handler(req, res) {
               text: "________________________________________",
               alignment: AlignmentType.CENTER,
               spacing: { before: 1200, after: 200 },
-              font: "Arial",
+              font: "Times New Roman",
             }),
             new Paragraph({
               text: datosCaso.revisor || "LIC. MANUEL TORIZ CHAVARRÍA",
               alignment: AlignmentType.CENTER,
               bold: true,
-              font: "Arial",
+              font: "Times New Roman",
               size: 22,
             }),
           ],
