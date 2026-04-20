@@ -268,7 +268,7 @@ export default function App() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            images: images.map(img => ({ data: img.data, type: img.type, category: img.category })),
+            imagenes: images.map(img => ({ data: img.data, type: img.type, category: img.category })),
             datosCaso: {
               empresa,
               tipo: `${tipo} - ${categoria}`,
