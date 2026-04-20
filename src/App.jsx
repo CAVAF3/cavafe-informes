@@ -165,7 +165,11 @@ export default function App() {
     setImages([]); setMissing([]); setAnalisisIA(null);
   };
 
-  const docsReq = tipo.includes("Plataforma") ? DOCS_PLAT : DOCS_P;
+  const docsReq = tipo === "Recuperación de Certificados" 
+    ? ["Factura CFDI"] 
+    : tipo.includes("Plataforma") 
+      ? DOCS_PLAT 
+      : DOCS_P;
 
   const checkMissing = (imgs) => {
     const loaded = imgs.map(i => i.category);
