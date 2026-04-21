@@ -210,17 +210,18 @@ export default function App() {
         r.onloadend = () => res(r.result.split(',')[1]);
         r.readAsDataURL(file);
       });
-      let finalData = base64, url = `data:${file.type};base64,${base64}`;
+      let finalData = base64, url = `data:${file.type};base64,${base64}`, finalType = file.type;
       if (file.type.startsWith('image/')) {
         try {
           const bordered = await processImageWithBorder(`data:${file.type};base64,${base64}`);
           finalData = bordered.split(',')[1];
           url = bordered;
+          finalType = 'image/jpeg'; // Cambiado a JPEG después de procesar
         } catch (err) {
           console.warn('Error procesando imagen:', err);
         }
       }
-      return { name: file.name, type: file.type, data: finalData, url, category: docsReq[0] || "Documento" };
+      return { name: file.name, type: finalType, data: finalData, url, category: docsReq[0] || "Documento" };
     }));
     const updated = [...images, ...processed];
     setImages(updated);
