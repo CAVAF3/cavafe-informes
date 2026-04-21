@@ -95,6 +95,12 @@ export default async function handler(req, res) {
       oficio2 = fs.readFileSync(oficioPath2);
       oficio3 = fs.readFileSync(oficioPath3);
       oficio4 = fs.readFileSync(oficioPath4);
+      const logoPath = path.join(assetsPath, "logo-cavafe.png");
+      if (!fs.existsSync(logoPath)) throw new Error("logo-cavafe.png no encontrado");
+      const logoCavafe = fs.readFileSync(logoPath);
+      
+      console.log("✅ Logo CAVAFE cargado");
+
       
       console.log("✅ Imágenes de oficio cargadas correctamente");
       console.log(`   - oficio_1: ${oficio1.length} bytes`);
@@ -156,6 +162,32 @@ export default async function handler(req, res) {
     // Generar documento
     console.log("📝 Generando documento Word...");
     
+
+    // Helper para crear header con logo
+    const createHeader = () => [
+      new Paragraph({
+        children: [
+          new ImageRun({
+            data: logoCavafe,
+            transformation: { width: 200, height: 45 },
+          }),
+        ],
+        spacing: { after: 200 },
+      }),
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: "INFORME DE INVESTIGACIÓN.",
+            font: "Times New Roman",
+            size: 28,
+            bold: true,
+          }),
+        ],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 400 },
+      }),
+    ];
+
     const doc = new Document({
       sections: [
         // ==================== PÁGINA 1: ANTECEDENTES ====================
@@ -167,23 +199,7 @@ export default async function handler(req, res) {
           },
           children: [
             // Header
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: "CAVAFE          ",
-                  font: "Times New Roman",
-                  size: 32,
-                  bold: true,
-                }),
-                new TextRun({
-                  text: "INFORME DE INVESTIGACIÓN.",
-                  font: "Times New Roman",
-                  size: 28,
-                }),
-              ],
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 400 },
-            }),
+            ...createHeader(),
 
             // Referencia
             new Paragraph({
@@ -397,12 +413,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
-              ],
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 400 },
-            }),
+            ...createHeader(),
+
 
             ...(facturaImagenes[1] ? [
               new Paragraph({
@@ -428,12 +440,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
-              ],
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 400 },
-            }),
+            ...createHeader(),
+
 
             new Paragraph({
               children: [new TextRun({ text: "HIPÓTESIS:", bold: true, font: "Times New Roman", size: 22 })],
@@ -469,12 +477,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
-              ],
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 400 },
-            }),
+            ...createHeader(),
+
             new Paragraph({
               children: [
                 new ImageRun({
@@ -490,12 +494,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
-              ],
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 400 },
-            }),
+            ...createHeader(),
+
             new Paragraph({
               children: [
                 new ImageRun({
@@ -511,12 +511,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
-              ],
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 400 },
-            }),
+            ...createHeader(),
+
             new Paragraph({
               children: [
                 new ImageRun({
@@ -532,12 +528,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
-              ],
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 400 },
-            }),
+            ...createHeader(),
+
             new Paragraph({
               children: [
                 new ImageRun({
@@ -554,12 +546,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
-              ],
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 400 },
-            }),
+            ...createHeader(),
+
 
             new Paragraph({
               text: "Verificación de los datos que conforman la versión impresa del CFDI.",
@@ -644,12 +632,8 @@ export default async function handler(req, res) {
           children: [
             new Paragraph({
               children: [
-                new TextRun({ text: "CAVAFE          ", font: "Times New Roman", size: 32, bold: true }),
-                new TextRun({ text: "INFORME DE INVESTIGACIÓN.", font: "Times New Roman", size: 28 }),
-              ],
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 400 },
-            }),
+            ...createHeader(),
+
 
             new Paragraph({
               text: "CONCLUSIÓN.",
