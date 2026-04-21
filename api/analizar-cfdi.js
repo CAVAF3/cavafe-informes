@@ -98,29 +98,7 @@ Para cada verificación determina: "COINCIDENTE" o "NO COINCIDENTE"
    - Si TODAS las verificaciones son COINCIDENTE: conclusion = "autentico", inconsistencias = []
    - Si alguna verificación es NO COINCIDENTE: conclusion = "no_autentico", inconsistencias = ["lista de qué no coincide"]
 
-Formato de respuesta (SOLO este JSON, sin código markdown, sin explicaciones):
-
-{
-  "fecha_emision": "13 de mayo de 2025",
-  "emisor_nombre": "Comercializadora de Carrocerías Busscar de México",
-  "emisor_rfc": "CAB140619SS3",
-  "receptor_nombre": "Tours Reyes",
-  "receptor_rfc": "TREB08121238",
-  "folio_fiscal": "F89CDFC2-3051-11FO-81E7-45C6A45137D0",
-  "no_certificado": "00001000000502098",
-  "codigo_postal": "42185",
-  "marca": "Busscar",
-  "modelo": "2025",
-  "serie": "9BSK6X20XS40898",
-  "verificaciones": {
-    "fecha": "COINCIDENTE",
-    "folio": "COINCIDENTE",
-    "sello": "COINCIDENTE",
-    "certificado": "COINCIDENTE"
-  },
-  "conclusion": "autentico",
-  "inconsistencias": []
-}`;
+Responde ÚNICAMENTE con el objeto JSON. Analiza CUIDADOSAMENTE la imagen del CFDI adjunta y extrae los datos REALES que aparecen en ella.`;
 
     // 4. LLAMAR A ANTHROPIC API
     console.log("🤖 Enviando solicitud a Claude...");
