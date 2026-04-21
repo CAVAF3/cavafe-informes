@@ -566,7 +566,7 @@ export default function App() {
               <div style={{fontSize:38,marginBottom:8}}>📂</div>
               <div style={{fontWeight:700,color:C.navy,fontSize:15}}>Arrastra aquí los documentos del caso</div>
               <div style={{fontSize:13,color:C.textLight,marginTop:4}}>Imágenes (JPG, PNG) y documentos Word (DOCX)</div>
-              <input ref={fileRef} type="file" multiple accept="image/*,.doc,.docx" style={{display:"none"}} onChange={e=>handleFiles(e.target.files)}/>
+              <input ref={fileRef} type="file" multiple accept="image/*,.pdf,.doc,.docx" style={{display:"none"}} onChange={e=>handleFiles(e.target.files)}/>
             </div>
             {images.length>0&&<div>
               <div style={{fontWeight:700,fontSize:13,color:C.textLight,marginBottom:10}}>
