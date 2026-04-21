@@ -280,8 +280,6 @@ export default async function handler(req, res) {
               alignment: AlignmentType.JUSTIFIED,
               spacing: { after: 300 },
             }),
-              size: 22,
-            }),
 
             // Antecedentes
             new Paragraph({
